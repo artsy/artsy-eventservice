@@ -1,4 +1,4 @@
-source "http://rubygems.org"
+source 'http://rubygems.org'
 
 ruby '2.3.0'
 
@@ -9,6 +9,6 @@ gem 'bunny' # for producing/consuming evets from RabbitMQ
 
 
 group :test do
-  gem "rspec"
-  gem "rspec-mocks"
+  gem 'rspec'
+  gem 'rspec-mocks'
 end

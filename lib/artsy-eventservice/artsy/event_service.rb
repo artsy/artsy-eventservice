@@ -1,3 +1,5 @@
+require 'bunny'
+
 module Artsy
   module EventService
     def self.conn
@@ -28,7 +30,7 @@ module Artsy
     end
 
     def self.app_name
-      defined?(Rails) ? Rails.application.class.to_s.split("::").first : 'artsy'
+      defined?(Rails) ? Rails.application.class.to_s.split('::').first : 'artsy'
     end
   end
 end
