@@ -1,4 +1,4 @@
-# Artsy EventService
+# Artsy EventService [![Build Status](https://travis-ci.org/artsy/artsy-eventservice.svg?branch=master)](https://travis-ci.org/artsy/artsy-eventservice)
 Ruby Gem for producing events in Artsy's event stream.
 
 ## Installation
