@@ -1,2 +1,53 @@
-# artsy-eventservice
+# Artsy EventService
 Ruby Gem for producing events in Artsy's event stream.
+
+## Installation
+Add following line to your Gemfile
+
+```
+gem 'artsy-eventservice'
+```
+
+## Usage
+Create events by inheriting from `Events::BaseEvent`. Override the properties that are different than `BaseEvent` and set extra `properties`.
+
+```ruby
+module Events
+  class ConversationEvent < Events::BaseEvent
+    def subject
+	    {
+	      id: @object.to_id,
+	      display: @object.to_name
+	    }
+      end
+    end
+
+    def properties
+      {
+        test_prop: 'testing'
+      }
+    end
+  end
+end
+```
+
+`Artsy::EventService` uses [Bunny](http://rubybunny.info/) to securly connect to RabbitMQ over ssl, make sure following environment variables are set in your project:
+```
+RABBITMQ_URL="something like amqps://<user>:<pass>@rabbitmq.artsy.net:<port>/<vhost>"
+RABBITMQ_CLIENT_CERT=base64 strict decoded
+RABBTIMQ_CLIENT_KEY=base64 strict decoded
+RABBITMQ_CA_CERT=base64 strict decoded
+```
+
+Call `post_event` with proper `topic` and `event`:
+```ruby
+Artsy::EventService.post_event(topic: 'testing', event: event_model)
+```
+
+
+# Contributing
+
+* Fork the project.
+* Make your feature addition or bug fix with tests.
+* Update CHANGELOG.
+* Send a pull request. Bonus points for topic branches.

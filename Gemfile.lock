@@ -1,0 +1,42 @@
+PATH
+  remote: .
+  specs:
+    artsy-eventservice (0.1.0)
+
+GEM
+  remote: http://rubygems.org/
+  specs:
+    amq-protocol (2.0.1)
+    bunny (2.6.2)
+      amq-protocol (>= 2.0.1)
+    diff-lcs (1.2.5)
+    rake (11.3.0)
+    rspec (3.3.0)
+      rspec-core (~> 3.3.0)
+      rspec-expectations (~> 3.3.0)
+      rspec-mocks (~> 3.3.0)
+    rspec-core (3.3.0)
+      rspec-support (~> 3.3.0)
+    rspec-expectations (3.3.0)
+      diff-lcs (>= 1.2.0, < 2.0)
+      rspec-support (~> 3.3.0)
+    rspec-mocks (3.3.0)
+      diff-lcs (>= 1.2.0, < 2.0)
+      rspec-support (~> 3.3.0)
+    rspec-support (3.3.0)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  artsy-eventservice!
+  bunny
+  rake
+  rspec
+  rspec-mocks
+
+RUBY VERSION
+   ruby 2.3.0p0
+
+BUNDLED WITH
+   1.12.5
