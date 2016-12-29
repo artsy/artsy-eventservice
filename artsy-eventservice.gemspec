@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
   s.email = 'ashkan.nasseri@gmail.com'
   s.platform = Gem::Platform::RUBY
   s.required_rubygems_version = '>= 1.3.6'
-  s.files = `git ls-files`.split('\n')
+  s.files = `git ls-files`.split("\n")
   s.require_paths = ['lib']
   s.homepage = 'http://github.com/artsy/artsy-eventservice'
   s.licenses = ['MIT']
