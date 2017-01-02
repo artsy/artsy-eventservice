@@ -15,11 +15,10 @@ Create events by inheriting from `Events::BaseEvent`. Override the properties th
 module Events
   class ConversationEvent < Events::BaseEvent
     def subject
-	    {
-	      id: @object.to_id,
-	      display: @object.to_name
-	    }
-      end
+      {
+        id: @object.to_id,
+        display: @object.to_name
+      }
     end
 
     def properties
