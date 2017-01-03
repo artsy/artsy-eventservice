@@ -38,6 +38,11 @@ RABBTIMQ_CLIENT_KEY=base64 strict decoded
 RABBITMQ_CA_CERT=base64 strict decoded
 ```
 
+### Enabaling Posting Events
+We have a feature flag setup for enabling/disabling EventService. Setting `EVENT_STREAM_ENABLED` env variable will enable posting events. Not having this env means event service is disabled and no events will actually be sent.
+
+
+### Posting events
 Call `post_event` with proper `topic` and `event`:
 ```ruby
 Artsy::EventService.post_event(topic: 'testing', event: event_model)
