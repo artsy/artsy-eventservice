@@ -7,7 +7,7 @@ module Artsy
         ENV['RABBITMQ_URL'],
         tls: true,
         tls_cert: Base64.decode64(ENV['RABBITMQ_CLIENT_CERT'] || ''),
-        tls_key: Base64.decode64(ENV['RABBTIMQ_CLIENT_KEY'] || ''),
+        tls_key: Base64.decode64(ENV['RABBITMQ_CLIENT_KEY'] || ''),
         tls_ca_certificates: [Base64.decode64(ENV['RABBITMQ_CA_CERT'] || '')],
         verify_peer: true
       )
