@@ -38,7 +38,7 @@ describe Artsy::EventService do
       end
       it 'calls publish on the exchange with proper data' do
         conn = double
-        expect(Artsy::EventService).to receive(:conn).at_least(3).times.and_return(conn)
+        expect(Artsy::EventService).to receive(:create_conn).once.and_return(conn)
         expect(conn).to receive(:start).once
         expect(conn).to receive(:close).once
         channel = double

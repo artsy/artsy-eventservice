@@ -2,8 +2,8 @@ require 'bunny'
 
 module Artsy
   module EventService
-    def self.conn
-      @conn ||= Bunny.new(
+    def self.create_conn
+      Bunny.new(
         ENV['RABBITMQ_URL'],
         tls: true,
         tls_cert: Base64.decode64(ENV['RABBITMQ_CLIENT_CERT'] || ''),
@@ -16,6 +16,7 @@ module Artsy
     def self.post_event(topic:, event:)
       return unless ENV['EVENT_STREAM_ENABLED']
       raise 'Event missing topic or verb.' if event.verb.to_s.empty? || topic.to_s.empty?
+      conn = create_conn
       conn.start
       channel = conn.create_channel
       exchange = channel.topic(topic, durable: true)
