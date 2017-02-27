@@ -7,9 +7,9 @@ module Artsy
       params = { tls: tls }
       if tls
         params.merge!({
-          tls_cert: Base64.decode64(ENV['RABBITMQ_CLIENT_CERT'] || ''),
-          tls_key: Base64.decode64(ENV['RABBITMQ_CLIENT_KEY'] || ''),
-          tls_ca_certificates: [Base64.decode64(ENV['RABBITMQ_CA_CERT'] || '')],
+          tls_cert: Base64.decode64(ENV['RABBITMQ_CLIENT_CERT']),
+          tls_key: Base64.decode64(ENV['RABBITMQ_CLIENT_KEY']),
+          tls_ca_certificates: [Base64.decode64(ENV['RABBITMQ_CA_CERT'])],
           verify_peer: ENV['RABBITMQ_NO_VERIFY_PEER'] == 'true' ? false : true
         })
       end
