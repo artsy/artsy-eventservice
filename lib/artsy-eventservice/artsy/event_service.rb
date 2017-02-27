@@ -3,14 +3,17 @@ require 'bunny'
 module Artsy
   module EventService
     def self.create_conn
-      Bunny.new(
-        ENV['RABBITMQ_URL'],
-        tls: true,
-        tls_cert: Base64.decode64(ENV['RABBITMQ_CLIENT_CERT'] || ''),
-        tls_key: Base64.decode64(ENV['RABBITMQ_CLIENT_KEY'] || ''),
-        tls_ca_certificates: [Base64.decode64(ENV['RABBITMQ_CA_CERT'] || '')],
-        verify_peer: true
-      )
+      tls = ENV['RABBITMQ_NO_TLS'] == 'true' ? false : true
+      params = { tls: tls }
+      if tls
+        params.merge!({
+          tls_cert: Base64.decode64(ENV['RABBITMQ_CLIENT_CERT'] || ''),
+          tls_key: Base64.decode64(ENV['RABBITMQ_CLIENT_KEY'] || ''),
+          tls_ca_certificates: [Base64.decode64(ENV['RABBITMQ_CA_CERT'] || '')],
+          verify_peer: ENV['RABBITMQ_NO_VERIFY_PEER'] == 'true' ? false : true
+        })
+      end
+      Bunny.new(ENV['RABBITMQ_URL'], **params)
     end
 
     def self.post_event(topic:, event:)
