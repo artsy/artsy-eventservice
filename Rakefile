@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 require 'rubygems'
 require 'bundler/gem_tasks'
 Bundler.setup(:default, :development)
@@ -9,4 +10,4 @@ RSpec::Core::RakeTask.new(:spec) do |spec|
   spec.pattern = FileList['spec/**/*_spec.rb']
 end
 
-task :default => :spec
+task default: :spec

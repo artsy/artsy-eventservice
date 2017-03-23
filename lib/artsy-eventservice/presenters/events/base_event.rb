@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 require 'json'
 
 module Events
@@ -11,27 +12,29 @@ module Events
     end
 
     def subject
-      {
-        id: @subject.id.to_s || '',
-        display: @subject.to_s
-      } if @subject
+      if @subject
+        {
+          id: @subject.id.to_s || '',
+          display: @subject.to_s
+        }
+      end
     end
 
     def object
-      {
-        id: @object.id.to_s,
-        root_type: @object.class.to_s,
-        display: @object.to_s
-      } if @object
+      if @object
+        {
+          id: @object.id.to_s,
+          root_type: @object.class.to_s,
+          display: @object.to_s
+        }
+      end
     end
 
     def json
-      JSON.generate({
-        verb: @verb,
-        subject: subject,
-        object: object,
-        properties: properties
-      })
+      JSON.generate(verb: @verb,
+                    subject: subject,
+                    object: object,
+                    properties: properties)
     end
   end
 end
