@@ -1,3 +1,5 @@
+### 0.2.0 (3/24/17)
+* Add Consumer capability
 ### 0.1.2 (3/23/17)
 * Refactor into namespaced modules and add configuration
 
