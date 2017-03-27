@@ -18,10 +18,6 @@ describe Artsy::EventService do
         Artsy::EventService.configure { |es| es.config.event_stream_enabled = expected}
         expect(Artsy::EventService.config.event_stream_enabled).to be expected
       end
-      it 'freezes the config' do
-        Artsy::EventService.configure { |es| es.config.app_name = 'foo' }
-        expect { Artsy::EventService.config.app_name = 'bar' }.to raise_error RuntimeError
-      end
     end
 
   end
@@ -36,12 +32,6 @@ describe Artsy::EventService do
         Artsy::EventService.post_event(topic: 'test', event: event)
       end
     end
-    describe '.consume' do
-      it 'does not connect to rabbit' do
-        expect(Artsy::EventService::Consumer).not_to receive(:consume)
-        Artsy::EventService.consume(topic: 'test', event: event)
-      end
-    end
   end
 
   context 'event stream enabled' do
@@ -53,12 +43,6 @@ describe Artsy::EventService do
         expect(Artsy::EventService::Publisher).to receive(:publish)
 
         Artsy::EventService.post_event(topic: 'test', event: event)
-      end
-    end
-    describe '.consume' do
-      it 'does connect to rabbit' do
-        expect(Artsy::EventService::Consumer).to receive(:consume)
-        Artsy::EventService.consume(topic: 'test', event: event)
       end
     end
   end
