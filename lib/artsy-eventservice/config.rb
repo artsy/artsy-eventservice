@@ -1,18 +1,42 @@
 # frozen_string_literal: true
-require 'ostruct'
+
 module Artsy
   module EventService
-    def self.initial_config
-      {
-        app_name: defined?(Rails) ? Rails.application.class.to_s.split('::').first : 'artsy',
-        event_stream_enabled:         ENV['EVENT_STREAM_ENABLED'] == 'true',
-        rabbitmq_url:                 ENV['RABBITMQ_URL'] || nil,
-        tls:                          !(ENV['RABBITMQ_NO_TLS'] == 'true'),
-        tls_ca_certificate:           ENV['RABBITMQ_CA_CERT']     ? Base64.decode64(ENV['RABBITMQ_CA_CERT'])     : nil,
-        tls_cert:                     ENV['RABBITMQ_CLIENT_CERT'] ? Base64.decode64(ENV['RABBITMQ_CLIENT_CERT']) : nil,
-        tls_key:                      ENV['RABBITMQ_CLIENT_KEY']  ? Base64.decode64(ENV['RABBITMQ_CLIENT_KEY'])  : nil,
-        verify_peer:                  !(ENV['RABBITMQ_NO_VERIFY_PEER'] == 'true')
-      }
+    module Config
+      extend self
+
+      attr_accessor :app_name
+      attr_accessor :event_stream_enabled
+      attr_accessor :rabbitmq_url
+      attr_accessor :tls
+      attr_accessor :tls_ca_certificate
+      attr_accessor :tls_cert
+      attr_accessor :tls_key
+      attr_accessor :verify_peer
+
+      def reset
+        self.app_name = nil
+        self.event_stream_enabled = false
+        self.rabbitmq_url = nil
+        self.tls = nil
+        self.tls_ca_certificate = nil
+        self.tls_cert = nil
+        self.tls_key = nil
+        self.verify_peer = nil
+      end
+
+      reset
+    end
+
+    class << self
+      def configure
+        yield(Config) if block_given?
+        Config
+      end
+
+      def config
+        Config
+      end
     end
   end
 end
