@@ -4,8 +4,26 @@ Ruby Gem for producing events in Artsy's event stream.
 ## Installation
 Add following line to your Gemfile
 
-```
+```ruby
 gem 'artsy-eventservice'
+```
+
+## Configuration
+
+Add `artsy_eventservice.rb under config/initializers. `Artsy::EventService` uses [Bunny](http://rubybunny.info/) to connect to RabbitMQ. Here is a sample of configuration:
+
+```ruby
+# config/initializers/artsy_eventservice.rb
+Artsy::EventService.configure do |config|
+  config.app_name = 'my-app'  # Used for RabbitMQ queue name
+  config.event_stream_enabled = true  # Boolean used to enable/disable posting events
+  config.rabbitmq_url = 'amqp(s)://<user>:<pass>@<host>:<port>/<vhost>'  # required
+  config.tls = true  # required, Currently only supports TLS enabled
+  config.tls_ca_certificate = <base64 strict decoded>
+  config.tls_cert = <base64 strict decoded>
+  config.tls_key = <base64 strict decoded>
+  config.verify_peer = true  # Boolean used to decide in case we are using tls, we should verify peer or not
+end
 ```
 
 ## Usage
@@ -30,15 +48,8 @@ module Events
 end
 ```
 
-`Artsy::EventService` uses [Bunny](http://rubybunny.info/) to securly connect to RabbitMQ over ssl, make sure following environment variables are set in your project:
-```
-RABBITMQ_URL="something like amqps://<user>:<pass>@rabbitmq.artsy.net:<port>/<vhost>"
-RABBITMQ_CLIENT_CERT=base64 strict decoded
-RABBTIMQ_CLIENT_KEY=base64 strict decoded
-RABBITMQ_CA_CERT=base64 strict decoded
-```
 
-### Enabaling Posting Events
+### Enabling Posting Events
 We have a feature flag setup for enabling/disabling EventService. Setting `EVENT_STREAM_ENABLED` env variable will enable posting events. Not having this env means event service is disabled and no events will actually be sent.
 
 
@@ -48,6 +59,9 @@ Call `post_event` with proper `topic` and `event`:
 Artsy::EventService.post_event(topic: 'testing', event: event_model)
 ```
 
+
+### Update to Version 1.0
+In previous versions this gem was using Environment variables for configuration. On version 1.0, configuration step is now mandatory and it will no longer read environment variables directly. Make sure to go to configuration step.
 
 # Contributing
 

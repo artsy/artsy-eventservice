@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 module Artsy
   module EventService
-    VERSION = '0.1.5'
+    VERSION = '1.0'
   end
 end

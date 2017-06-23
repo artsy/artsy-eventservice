@@ -6,8 +6,11 @@ describe Artsy::EventService::Publisher do
   let(:event) { double('event', topic: 'foo') }
 
   before do
-    Artsy::EventService.instance_variable_set('@configuration', nil)
-    ENV['EVENT_STREAM_ENABLED'] = 'true'
+    Artsy::EventService.configure do |config|
+      config.app_name = 'artsy'
+      config.event_stream_enabled = true
+      config.tls = true
+    end
     allow(event).to receive_messages(
       verb: 'testing',
       json: JSON.generate(hello: true)
