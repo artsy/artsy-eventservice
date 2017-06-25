@@ -19,9 +19,9 @@ Artsy::EventService.configure do |config|
   config.event_stream_enabled = true  # Boolean used to enable/disable posting events
   config.rabbitmq_url = 'amqp(s)://<user>:<pass>@<host>:<port>/<vhost>'  # required
   config.tls = true  # required, Currently only supports TLS enabled
-  config.tls_ca_certificate = <base64 strict decoded>
-  config.tls_cert = <base64 strict decoded>
-  config.tls_key = <base64 strict decoded>
+  config.tls_ca_certificate = <string content>
+  config.tls_cert = <string content>
+  config.tls_key = <string content>
   config.verify_peer = true  # Boolean used to decide in case we are using tls, we should verify peer or not
 end
 ```
