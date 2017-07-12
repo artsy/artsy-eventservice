@@ -36,7 +36,7 @@ module Artsy
       end
 
       def no_tls_params
-        raise 'not implemented- TLS only'
+        {}
       end
 
       def config
