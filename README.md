@@ -18,7 +18,7 @@ Artsy::EventService.configure do |config|
   config.app_name = 'my-app'  # Used for RabbitMQ queue name
   config.event_stream_enabled = true  # Boolean used to enable/disable posting events
   config.rabbitmq_url = 'amqp(s)://<user>:<pass>@<host>:<port>/<vhost>'  # required
-  config.tls = true  # required, Currently only supports TLS enabled
+  config.tls = true  # following configs are only used if tls is true
   config.tls_ca_certificate = <string content>
   config.tls_cert = <string content>
   config.tls_key = <string content>
