@@ -21,10 +21,15 @@ describe Artsy::EventService do
       allow(Artsy::EventService).to receive(:config).and_return(double(event_stream_enabled: true))
     end
     describe '.post_event' do
-      it 'does connect to rabbit' do
-        expect(Artsy::EventService::Publisher).to receive(:publish)
+      it 'calls publish with proper params' do
+        expect(Artsy::EventService::Publisher).to receive(:publish).with(topic: 'test', event: event, routing_key: nil)
 
         Artsy::EventService.post_event(topic: 'test', event: event)
+      end
+      it 'calls publish with proper params with routing key' do
+        expect(Artsy::EventService::Publisher).to receive(:publish).with(topic: 'test', event: event, routing_key: 'good.route')
+
+        Artsy::EventService.post_event(topic: 'test', event: event, routing_key: 'good.route')
       end
     end
   end
