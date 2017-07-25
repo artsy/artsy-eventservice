@@ -77,6 +77,10 @@ Few examples:
 ### Update to Version 1.0
 In previous versions this gem was using Environment variables for configuration. On version 1.0, configuration step is now mandatory and it will no longer read environment variables directly. Make sure to go to configuration step.
 
+### Update to Version 1.0.3
+Since this version we've updated `routing_key` to default to `<event object class name>.<event.verb>`. This means if your consumers were listening on `verb` routing key, now they need to update to include object's class name.
+You can always override this feature by passing in `routing_key` to `post_event`.
+
 # Contributing
 
 * Fork the project.
