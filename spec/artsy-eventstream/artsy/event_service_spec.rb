@@ -2,7 +2,7 @@
 require 'spec_helper'
 
 describe Artsy::EventService do
-  let(:event) { double('event', topic: 'foo', verb: 'bar') }
+  let(:event) { double('event', topic: 'foo', verb: 'bar', routing_key: 'test.passed') }
 
   context 'event stream disabled' do
     before do
@@ -22,7 +22,7 @@ describe Artsy::EventService do
     end
     describe '.post_event' do
       it 'calls publish with proper params' do
-        expect(Artsy::EventService::Publisher).to receive(:publish).with(topic: 'test', event: event, routing_key: nil)
+        expect(Artsy::EventService::Publisher).to receive(:publish).with(topic: 'test', event: event, routing_key: 'test.passed')
 
         Artsy::EventService.post_event(topic: 'test', event: event)
       end
