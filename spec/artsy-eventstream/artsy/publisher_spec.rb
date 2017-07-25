@@ -29,7 +29,7 @@ describe Artsy::EventService::Publisher do
       allow(event).to receive(:verb).and_return(nil)
       expect { Artsy::EventService::Publisher.publish(topic: 'test', event: event) }.to raise_error 'Event missing topic or verb.'
     end
-    it 'calls publish on the exchange with proper data' do
+    it 'uses verb as routing key when calling publish on the exchange without passing routing_key' do
       conn = double
       channel = double
       exchange = double
@@ -47,6 +47,25 @@ describe Artsy::EventService::Publisher do
         app_id: 'artsy'
       )
       Artsy::EventService::Publisher.publish(topic: 'test', event: event)
+    end
+    it 'uses verb as routing key when calling publish on the exchange without passing routing_key' do
+      conn = double
+      channel = double
+      exchange = double
+      allow(Bunny).to receive(:new).and_return(conn)
+      expect(conn).to receive(:start).once
+      expect(conn).to receive(:stop).once
+      allow(conn).to receive(:create_channel).and_return(channel)
+      allow(channel).to receive(:topic).with('test', durable: true).and_return(exchange)
+
+      expect(exchange).to receive(:publish).with(
+        JSON.generate(hello: true),
+        routing_key: 'good.route',
+        persistent: true,
+        content_type: 'application/json',
+        app_id: 'artsy'
+      )
+      Artsy::EventService::Publisher.publish(topic: 'test', event: event, routing_key: 'good.route')
     end
   end
 end
