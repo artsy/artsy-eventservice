@@ -32,4 +32,9 @@ describe Events::BaseEvent do
       )
     end
   end
+  describe '#routing_key' do
+    it 'returns proper routing key' do
+      expect(event.routing_key).to eq 'rspec-mocks-double.test'
+    end
+  end
 end

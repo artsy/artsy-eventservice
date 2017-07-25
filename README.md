@@ -59,6 +59,20 @@ Call `post_event` with proper `topic` and `event`:
 Artsy::EventService.post_event(topic: 'testing', event: event_model)
 ```
 
+# How to pick topic and routing key?
+Think of topic as high level business area. From consumer perspective there will be one connection per topic, consumer can decide to filter events they want to receive in that topic based on `routing_key` they listening on. For `topic` use plural names.
+
+We recommend to use following `routing_key` strategy:
+`<model_name>.<verb>`.
+
+Few examples:
+- Topic: `conversations`, routing key: `message.sent`
+- Topic: `conversations`, routing key: `conversation.created`
+- Topic: `conversations`, routing key: `conversation.dismissed`
+- Topic: `invoices`, routing key: `invoice.paid`
+- Topic: `invoices`, routing key: `merchant_account.created`
+
+`BaseEvent` provides `routing_key` method by default which follows the same pattern mention above, you can override `routing_key` when calling `post_event`.
 
 ### Update to Version 1.0
 In previous versions this gem was using Environment variables for configuration. On version 1.0, configuration step is now mandatory and it will no longer read environment variables directly. Make sure to go to configuration step.

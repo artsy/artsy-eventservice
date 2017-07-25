@@ -36,5 +36,9 @@ module Events
                     object: object,
                     properties: properties)
     end
+
+    def routing_key
+      "#{@object.class.to_s.downcase.gsub('::', '-')}.#{@verb}"
+    end
   end
 end

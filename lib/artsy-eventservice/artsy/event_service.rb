@@ -4,7 +4,7 @@ module Artsy
   module EventService
     def self.post_event(topic:, event:, routing_key: nil)
       return unless event_stream_enabled?
-      Publisher.publish(topic: topic, event: event, routing_key: routing_key)
+      Publisher.publish(topic: topic, event: event, routing_key: routing_key || event.routing_key)
     end
 
     def self.consume(**args)
