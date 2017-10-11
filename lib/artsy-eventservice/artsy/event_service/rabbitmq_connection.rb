@@ -14,6 +14,7 @@ module Artsy
         conn = create_conn
         conn.start
         yield(conn)
+      ensure
         conn.stop
       end
 

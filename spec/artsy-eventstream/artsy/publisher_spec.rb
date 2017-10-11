@@ -38,6 +38,8 @@ describe Artsy::EventService::Publisher do
       expect(conn).to receive(:stop).once
       allow(conn).to receive(:create_channel).and_return(channel)
       allow(channel).to receive(:topic).with('test', durable: true).and_return(exchange)
+      allow(channel).to receive(:confirm_select)
+      allow(channel).to receive(:wait_for_confirms).and_return(true)
 
       expect(exchange).to receive(:publish).with(
         JSON.generate(hello: true),
@@ -57,6 +59,8 @@ describe Artsy::EventService::Publisher do
       expect(conn).to receive(:stop).once
       allow(conn).to receive(:create_channel).and_return(channel)
       allow(channel).to receive(:topic).with('test', durable: true).and_return(exchange)
+      allow(channel).to receive(:confirm_select)
+      allow(channel).to receive(:wait_for_confirms).and_return(true)
 
       expect(exchange).to receive(:publish).with(
         JSON.generate(hello: true),
@@ -66,6 +70,29 @@ describe Artsy::EventService::Publisher do
         app_id: 'artsy'
       )
       Artsy::EventService::Publisher.publish(topic: 'test', event: event, routing_key: 'good.route')
+    end
+    it 'raises an error if event publishing is unconfirmed' do
+      conn = double
+      channel = double
+      exchange = double
+      allow(Bunny).to receive(:new).and_return(conn)
+      expect(conn).to receive(:start).once
+      expect(conn).to receive(:stop).once
+      allow(conn).to receive(:create_channel).and_return(channel)
+      allow(channel).to receive(:topic).with('test', durable: true).and_return(exchange)
+      allow(channel).to receive(:confirm_select)
+      allow(channel).to receive(:wait_for_confirms).and_return(false)
+
+      expect(exchange).to receive(:publish).with(
+        JSON.generate(hello: true),
+        routing_key: 'good.route',
+        persistent: true,
+        content_type: 'application/json',
+        app_id: 'artsy'
+      )
+      expect do
+        Artsy::EventService::Publisher.publish(topic: 'test', event: event, routing_key: 'good.route')
+      end.to raise_error 'Publishing event failed'
     end
   end
 end
