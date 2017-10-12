@@ -14,10 +14,9 @@ module Artsy
         conn
       end
 
-      # Synchronized access to the connection - rebuild if closed
+      # Synchronized access to the connection
       def self.get_connection
         @mutex.synchronize do
-          @connection = nil if @connection && @connection.closed?
           @connection ||= self.build_connection
         end
       end
