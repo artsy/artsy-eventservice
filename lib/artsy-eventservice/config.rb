@@ -13,6 +13,7 @@ module Artsy
       attr_accessor :tls_cert
       attr_accessor :tls_key
       attr_accessor :verify_peer
+      attr_accessor :confirms_enabled
 
       def reset
         self.app_name = nil
@@ -23,6 +24,7 @@ module Artsy
         self.tls_cert = nil
         self.tls_key = nil
         self.verify_peer = nil
+        self.confirms_enabled = true
       end
 
       reset
