@@ -15,5 +15,5 @@ Gem::Specification.new do |s|
   s.homepage = 'http://github.com/artsy/artsy-eventservice'
   s.licenses = ['MIT']
   s.summary = "Ruby Gem for producing events in Artsy's event stream"
-  s.add_dependency 'bunny', '~> 2.6.2'
+  s.add_dependency 'bunny', '~> 2.7.1'
 end
