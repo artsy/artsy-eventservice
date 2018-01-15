@@ -8,7 +8,7 @@ gem 'rake'
 gem 'bunny' # for producing/consuming evets from RabbitMQ
 
 group :development do
-  gem 'rubocop', '~> 0.47.1', require: false
+  gem 'rubocop', '~> 0.48', require: false
   gem 'pry-nav'
   gem 'pry-stack_explorer'
   gem 'pry-rescue'
