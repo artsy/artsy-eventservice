@@ -3,25 +3,15 @@
 module Artsy
   module EventService
 
-    # Post data without an event, must be serialized.
-    def self.post_data(topic:, data:, routing_key:)
-      RabbitMQConnection.get_channel do |channel|
-        channel.confirm_select if Artsy::EventService.config.confirms_enabled
-        exchange = channel.topic(topic, durable: true)
-        exchange.publish(
-          data,
-          routing_key: routing_key,
-          persistent: true,
-          content_type: 'application/json',
-          app_id: Artsy::EventService.config.app_name
-        )
-        raise 'Publishing data failed' if Artsy::EventService.config.confirms_enabled && !channel.wait_for_confirms
-      end
+    # Post data without an event, data must be a string.
+    def self.post_data(topic:, data:, routing_key: nil)
+      return unless event_stream_enabled?
+      Publisher.publish_data(topic: topic, data: data, routing_key: routing_key)
     end
 
     def self.post_event(topic:, event:, routing_key: nil)
       return unless event_stream_enabled?
-      Publisher.publish(topic: topic, event: event, routing_key: routing_key || event.routing_key)
+      Publisher.publish_event(topic: topic, event: event, routing_key: routing_key || event.routing_key)
     end
 
     def self.consume(**args)
