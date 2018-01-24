@@ -21,15 +21,22 @@ describe Artsy::EventService do
       allow(Artsy::EventService).to receive(:config).and_return(double(event_stream_enabled: true))
     end
     describe '.post_event' do
-      it 'calls publish with proper params' do
-        expect(Artsy::EventService::Publisher).to receive(:publish).with(topic: 'test', event: event, routing_key: 'test.passed')
+      it 'calls publish_event with proper params' do
+        expect(Artsy::EventService::Publisher).to receive(:publish_event).with(topic: 'test', event: event, routing_key: 'test.passed')
 
         Artsy::EventService.post_event(topic: 'test', event: event)
       end
       it 'calls publish with proper params with routing key' do
-        expect(Artsy::EventService::Publisher).to receive(:publish).with(topic: 'test', event: event, routing_key: 'good.route')
+        expect(Artsy::EventService::Publisher).to receive(:publish_event).with(topic: 'test', event: event, routing_key: 'good.route')
 
         Artsy::EventService.post_event(topic: 'test', event: event, routing_key: 'good.route')
+      end
+    end
+    describe '.post_data' do
+      it 'calls publish_data with proper params' do
+        expect(Artsy::EventService::Publisher).to receive(:publish_data).with(topic: 'test', data: 'foo', routing_key: 'good.route')
+
+        Artsy::EventService.post_data(topic: 'test', data: 'foo', routing_key: 'good.route')
       end
     end
   end

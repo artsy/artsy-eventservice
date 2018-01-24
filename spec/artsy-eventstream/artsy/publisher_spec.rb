@@ -19,15 +19,15 @@ describe Artsy::EventService::Publisher do
 
   describe '.publish' do
     it 'fails when topic is empty' do
-      expect { Artsy::EventService::Publisher.publish(topic: nil, event: event) }.to raise_error 'Event missing topic or verb.'
+      expect { Artsy::EventService::Publisher.publish_event(topic: nil, event: event) }.to raise_error 'Event missing topic or verb.'
     end
     it 'fails when event.verb is empty' do
       allow(event).to receive(:verb).and_return('')
-      expect { Artsy::EventService::Publisher.publish(topic: 'test', event: event) }.to raise_error 'Event missing topic or verb.'
+      expect { Artsy::EventService::Publisher.publish_event(topic: 'test', event: event) }.to raise_error 'Event missing topic or verb.'
     end
     it 'fails when event.verb is nil' do
       allow(event).to receive(:verb).and_return(nil)
-      expect { Artsy::EventService::Publisher.publish(topic: 'test', event: event) }.to raise_error 'Event missing topic or verb.'
+      expect { Artsy::EventService::Publisher.publish_event(topic: 'test', event: event) }.to raise_error 'Event missing topic or verb.'
     end
     it 'uses verb as routing key when calling publish on the exchange without passing routing_key' do
       conn = double
@@ -48,7 +48,7 @@ describe Artsy::EventService::Publisher do
         content_type: 'application/json',
         app_id: 'artsy'
       )
-      Artsy::EventService::Publisher.publish(topic: 'test', event: event)
+      Artsy::EventService::Publisher.publish_event(topic: 'test', event: event)
     end
     it 'uses verb as routing key when calling publish on the exchange without passing routing_key' do
       conn = double
@@ -69,7 +69,7 @@ describe Artsy::EventService::Publisher do
         content_type: 'application/json',
         app_id: 'artsy'
       )
-      Artsy::EventService::Publisher.publish(topic: 'test', event: event, routing_key: 'good.route')
+      Artsy::EventService::Publisher.publish_event(topic: 'test', event: event, routing_key: 'good.route')
     end
     it 'raises an error if event publishing is unconfirmed' do
       conn = double
@@ -91,8 +91,8 @@ describe Artsy::EventService::Publisher do
         app_id: 'artsy'
       )
       expect do
-        Artsy::EventService::Publisher.publish(topic: 'test', event: event, routing_key: 'good.route')
-      end.to raise_error 'Publishing event failed'
+        Artsy::EventService::Publisher.publish_event(topic: 'test', event: event, routing_key: 'good.route')
+      end.to raise_error 'Publishing data failed'
     end
   end
 end
