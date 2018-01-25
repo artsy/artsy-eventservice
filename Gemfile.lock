@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    artsy-eventservice (1.0.4)
+    artsy-eventservice (1.0.5)
       bunny (~> 2.7.1)
 
 GEM
@@ -78,4 +78,4 @@ RUBY VERSION
    ruby 2.3.0p0
 
 BUNDLED WITH
-   1.16.0
+   1.16.1
