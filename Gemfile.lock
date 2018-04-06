@@ -1,18 +1,18 @@
 PATH
   remote: .
   specs:
-    artsy-eventservice (1.0.5)
-      bunny (~> 2.7.1)
+    artsy-eventservice (1.0.6)
+      bunny
 
 GEM
   remote: http://rubygems.org/
   specs:
-    amq-protocol (2.2.0)
+    amq-protocol (2.3.0)
     ast (2.3.0)
     binding_of_caller (0.7.2)
       debug_inspector (>= 0.0.1)
-    bunny (2.7.1)
-      amq-protocol (>= 2.2.0)
+    bunny (2.9.2)
+      amq-protocol (~> 2.3.0)
     coderay (1.1.1)
     debug_inspector (0.0.2)
     diff-lcs (1.2.5)
