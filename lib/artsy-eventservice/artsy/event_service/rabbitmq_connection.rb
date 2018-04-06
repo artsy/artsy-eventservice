@@ -18,6 +18,7 @@ module Artsy
       def self.get_connection
         @mutex.synchronize do
           @connection ||= self.build_connection
+          @connection = self.build_connection if @connection.closed?
         end
       end
 
