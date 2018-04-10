@@ -22,11 +22,11 @@ describe Artsy::EventService::Publisher do
       expect { Artsy::EventService::Publisher.publish_event(topic: nil, event: event) }.to raise_error 'Event missing topic or verb.'
     end
     it 'fails when event.verb is empty' do
-      allow(event).to receive(:verb).and_return('')
+      expect(event).to receive(:verb).and_return('')
       expect { Artsy::EventService::Publisher.publish_event(topic: 'test', event: event) }.to raise_error 'Event missing topic or verb.'
     end
     it 'fails when event.verb is nil' do
-      allow(event).to receive(:verb).and_return(nil)
+      expect(event).to receive(:verb).and_return(nil)
       expect { Artsy::EventService::Publisher.publish_event(topic: 'test', event: event) }.to raise_error 'Event missing topic or verb.'
     end
     it 'uses verb as routing key when calling publish on the exchange without passing routing_key' do
@@ -34,12 +34,12 @@ describe Artsy::EventService::Publisher do
       channel = double
       exchange = double
       allow(Artsy::EventService::RabbitMQConnection).to receive(:get_connection).with(no_args).and_return(conn)
-      allow(conn).to receive(:create_channel).and_return(channel)
-      allow(channel).to receive(:open?).and_return(true)
-      allow(channel).to receive(:topic).with('test', durable: true).and_return(exchange)
-      allow(channel).to receive(:confirm_select)
-      allow(channel).to receive(:wait_for_confirms).and_return(true)
-      allow(channel).to receive(:close)
+      expect(conn).to receive(:create_channel).and_return(channel)
+      expect(channel).to receive(:open?).and_return(true)
+      expect(channel).to receive(:topic).with('test', durable: true).and_return(exchange)
+      expect(channel).to receive(:confirm_select)
+      expect(channel).to receive(:wait_for_confirms).and_return(true)
+      expect(channel).to receive(:close)
 
       expect(exchange).to receive(:publish).with(
         JSON.generate(hello: true),
@@ -56,12 +56,12 @@ describe Artsy::EventService::Publisher do
       channel = double
       exchange = double
       allow(Artsy::EventService::RabbitMQConnection).to receive(:get_connection).with(no_args).and_return(conn)
-      allow(conn).to receive(:create_channel).and_return(channel)
-      allow(channel).to receive(:open?).and_return(true)
-      allow(channel).to receive(:topic).with('test', durable: true).and_return(exchange)
-      allow(channel).to receive(:confirm_select)
-      allow(channel).to receive(:wait_for_confirms).and_return(true)
-      allow(channel).to receive(:close)
+      expect(conn).to receive(:create_channel).and_return(channel)
+      expect(channel).to receive(:open?).and_return(true)
+      expect(channel).to receive(:topic).with('test', durable: true).and_return(exchange)
+      expect(channel).to receive(:confirm_select)
+      expect(channel).to receive(:wait_for_confirms).and_return(true)
+      expect(channel).to receive(:close)
 
       expect(exchange).to receive(:publish).with(
         JSON.generate(hello: true),
@@ -78,12 +78,12 @@ describe Artsy::EventService::Publisher do
       channel = double
       exchange = double
       allow(Artsy::EventService::RabbitMQConnection).to receive(:get_connection).with(no_args).and_return(conn)
-      allow(conn).to receive(:create_channel).and_return(channel)
-      allow(channel).to receive(:open?).and_return(true)
-      allow(channel).to receive(:topic).with('test', durable: true).and_return(exchange)
-      allow(channel).to receive(:confirm_select)
-      allow(channel).to receive(:wait_for_confirms).and_return(true)
-      allow(channel).to receive(:close)
+      expect(conn).to receive(:create_channel).and_return(channel)
+      expect(channel).to receive(:open?).and_return(true)
+      expect(channel).to receive(:topic).with('test', durable: true).and_return(exchange)
+      expect(channel).to receive(:confirm_select)
+      expect(channel).to receive(:wait_for_confirms).and_return(true)
+      expect(channel).to receive(:close)
 
       expect(exchange).to receive(:publish).with(
         JSON.generate(hello: true),
@@ -99,13 +99,13 @@ describe Artsy::EventService::Publisher do
       conn = double
       channel = double
       exchange = double
-      allow(Artsy::EventService::RabbitMQConnection).to receive(:get_connection).with(no_args).and_return(conn)
-      allow(conn).to receive(:create_channel).and_return(channel)
-      allow(channel).to receive(:open?).and_return(true)
-      allow(channel).to receive(:topic).with('test', durable: true).and_return(exchange)
-      allow(channel).to receive(:confirm_select)
-      allow(channel).to receive(:wait_for_confirms).and_return(false)
-      allow(channel).to receive(:close)
+      expect(Artsy::EventService::RabbitMQConnection).to receive(:get_connection).with(no_args).and_return(conn)
+      expect(conn).to receive(:create_channel).and_return(channel)
+      expect(channel).to receive(:open?).and_return(true)
+      expect(channel).to receive(:topic).with('test', durable: true).and_return(exchange)
+      expect(channel).to receive(:confirm_select)
+      expect(channel).to receive(:wait_for_confirms).and_return(false)
+      expect(channel).to receive(:close)
 
       expect(exchange).to receive(:publish).with(
         JSON.generate(hello: true),
