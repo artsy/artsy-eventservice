@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    artsy-eventservice (1.0.7)
+    artsy-eventservice (1.0.8)
       bunny
 
 GEM
