@@ -70,7 +70,7 @@ Few examples:
 - Topic: `conversations`, routing key: `conversation.created`
 - Topic: `conversations`, routing key: `conversation.dismissed`
 - Topic: `invoices`, routing key: `invoice.paid`
-- Topic: `invoices`, routing key: `merchant_account.created`
+- Topic: `invoices`, routing key: `merchantaccount.created`
 
 `BaseEvent` provides `routing_key` method by default which follows the same pattern mention above, you can override `routing_key` when calling `post_event`. In the default routing key we use `to_s.downcase.gsub('::', '-')` on class name of the `@object` so an instance of `Artsy::UserRequest` with action being `test` will lead to `artsy-userrequest.test`.
 
