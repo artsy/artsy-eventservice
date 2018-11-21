@@ -10,7 +10,7 @@ gem 'artsy-eventservice'
 
 ## Configuration
 
-Add `artsy_eventservice.rb under config/initializers. `Artsy::EventService` uses [Bunny](http://rubybunny.info/) to connect to RabbitMQ. Here is a sample of configuration:
+Add artsy_eventservice.rb within config/initializers. `Artsy::EventService` uses [Bunny](http://rubybunny.info/) to connect to RabbitMQ. Here is a sample of configuration:
 
 ```ruby
 # config/initializers/artsy_eventservice.rb
