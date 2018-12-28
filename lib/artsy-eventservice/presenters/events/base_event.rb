@@ -4,11 +4,11 @@ require 'json'
 module Events
   class BaseEvent
     attr_reader :verb, :subject, :object, :properties
+
     def initialize(user: nil, action:, model:)
       @subject = user
       @verb = action
       @object = model
-      @properties = nil
     end
 
     def subject
@@ -30,11 +30,16 @@ module Events
       end
     end
 
-    def json
+    def to_json
       JSON.generate(verb: @verb,
                     subject: subject,
                     object: object,
                     properties: properties)
+    end
+
+    def json
+      # Deprecated, switch to to_json
+      to_json
     end
 
     def routing_key
