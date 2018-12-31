@@ -1,3 +1,5 @@
+### 0.1.9
+* Add `to_json` to `BaseEvent` and deprecate `json` - [@ashkan18](https://github.com/ashkan18)
 ### 0.1.5 (3/24/17)
 * Add initializer-style configuration block
 ### 0.1.2 (3/23/17)

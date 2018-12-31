@@ -17,7 +17,7 @@ describe Events::BaseEvent do
   end
   describe '#json' do
     it 'returns proper json' do
-      expect(JSON.parse(event.json)).to match(
+      expect(JSON.parse(event.to_json)).to match(
         'verb' => 'test',
         'subject' => {
           'id' => 'user-1',

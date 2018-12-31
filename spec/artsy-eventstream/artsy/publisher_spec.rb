@@ -13,7 +13,7 @@ describe Artsy::EventService::Publisher do
     end
     allow(event).to receive_messages(
       verb: 'testing',
-      json: JSON.generate(hello: true)
+      to_json: JSON.generate(hello: true)
     )
   end
 

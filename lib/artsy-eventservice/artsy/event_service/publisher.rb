@@ -30,7 +30,7 @@ module Artsy
         raise 'Event missing topic or verb.' if event.verb.to_s.empty? || topic.to_s.empty?
         post_data(
           topic: topic,
-          data: event.json,
+          data: event.to_json,
           routing_key: routing_key || event.verb,
           headers: headers
         )
