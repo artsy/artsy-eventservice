@@ -3,6 +3,7 @@ require 'json'
 
 module Events
   class BaseEvent
+    extend Gem::Deprecate
     attr_reader :verb, :subject, :object, :properties
 
     def initialize(user: nil, action:, model:)
@@ -41,6 +42,7 @@ module Events
       # Deprecated, switch to to_json
       to_json
     end
+    deprecate :json, :to_json, 2019, 12
 
     def routing_key
       "#{@object.class.to_s.downcase.gsub('::', '-')}.#{@verb}"
