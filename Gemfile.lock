@@ -35,7 +35,7 @@ GEM
       binding_of_caller (>= 0.7)
       pry (>= 0.9.11)
     rainbow (3.0.0)
-    rake (12.3.0)
+    rake (13.0.1)
     rspec (3.5.0)
       rspec-core (~> 3.5.0)
       rspec-expectations (~> 3.5.0)
